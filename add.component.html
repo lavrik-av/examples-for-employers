@@ -1,0 +1,36 @@
+<section>
+	<div class="view-ctr px4 flex-c gap-1rem ctr-add ctr-add--transaction">
+		<form [formGroup]="form">
+			<app-nav-bar-back [navUrl]="navUrl" [title]="title"></app-nav-bar-back>
+
+			<div class="flex-jc-c mt24 px8">
+        <div class="flex-ai-c surface-container-lowest border-radius-50-percent h-96px w-96">
+          <mat-icon matIcon (click)="handle(IconBottomSheet, icons, undefined, undefined, 'SETTINGS.SELECT_ICON')" class="details-icon material-symbols-outlined opacity-54">{{ form.controls['icon'] .value }}</mat-icon>
+        </div>
+          <input class="d-none" matInput formControlName="icon" placeholder="{{ 'COMMON.ICON' | translate }}" />
+      </div>
+
+			<div class="mt16 flex-jc-c px8 mat-body-medium">
+          <app-text-edit [text]="form.controls['title'].value || ''" (click)="handle(TextBottomSheet, form.controls['title'].value || '', undefined, 'FORMS.CATEGORIES.ENTER_CATEGORY_NAME', 'FORMS.CATEGORIES.CATEGORY_NAME')"></app-text-edit>
+			</div>
+
+      <div class="controls-grey-box">
+        <app-text-edit-wide [text]="'FORMS.CATEGORIES.CATEGORY_NATURE'" [font]="'mat-body-small'" [value]="getCategoryNatureTitle(form.controls['nature'].value)" (click)="handle(ObjectListBottomSheet, categoriesNature, undefined, '', 'FORMS.CATEGORIES.CATEGORY_NATURE')"></app-text-edit-wide>
+          <div class="controls-hr" ></div>
+          @if(subcategory()) {
+            <app-text-edit-wide [text]="'FORMS.CATEGORIES.CATEGORY_TYPE'" [font]="'mat-body-small'" [value]="getCategoryTypeTitle(form.controls['type'].value)" [iconVisibility]="false"></app-text-edit-wide>
+          } @else {
+          <app-text-edit-wide [text]="'FORMS.CATEGORIES.CATEGORY_TYPE'" [font]="'mat-body-small'" [value]="getCategoryTypeTitle(form.controls['type'].value)" (click)="handle(ObjectListBottomSheet, categoryTypes, undefined, undefined, 'FORMS.CATEGORIES.SELECT_CATEGORY_TYPE')"></app-text-edit-wide>
+          }
+          <div class="controls-hr" ></div>
+        <app-title-slide-toggle [text]="'FORMS.CATEGORIES.SHOW_CATEGORY'" [disabled]="!!this.parentCategory && !this.parentCategory.active" (change)="handleBoolean('active', $event)" [checked]="form.controls['active'].value"></app-title-slide-toggle>
+      </div>
+
+      <div class="mt72 px12 flex-jc-c ctr-add__button">
+        <div class="w-p100">
+          <tm-submit-flat-button (handleClick)="save()" [form]="form" [colorClass]="'tertiary'" [processing$]="processing$" title="COMMON.SAVE"></tm-submit-flat-button>
+        </div>
+      </div>
+		</form>
+	</div>
+</section>
